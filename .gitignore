@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Output data
+spf_results.json
+*.json
+!package.json
+
+# Tranco dataset (too large for git)
+tranco_*.csv
+
+# OS
+.DS_Store
+Thumbs.db
