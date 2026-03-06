@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from spf_utils import (
+    DEFAULT_RETRIES,
     classify_strictness,
     get_ranking_tier,
     query_spf_records,
@@ -36,7 +37,11 @@ FIELDNAMES = [
 
 
 # scan a single domain for spf and collect all the fields we need
-def scan_domain(domain, rank, timeout=5.0):
+def scan_domain(domain, rank, timeout=5.0, retries=DEFAULT_RETRIES,
+                delay_min=0.0, delay_max=0.0):
+    if delay_max > 0:
+        time.sleep(random.uniform(delay_min, delay_max))
+
     tier = get_ranking_tier(rank)
     timestamp = datetime.now(timezone.utc).isoformat()
 
@@ -57,7 +62,7 @@ def scan_domain(domain, rank, timeout=5.0):
         "error": "",
     }
 
-    spf_data = query_spf_records(domain, timeout)
+    spf_data = query_spf_records(domain, timeout, retries)
 
     if spf_data["error"]:
         result["error"] = spf_data["error"]
@@ -181,6 +186,38 @@ def print_summary(results):
     print(f"{'=' * 55}\n")
 
 
+# load domains already present in a partial results csv so we can skip them
+def load_completed(path):
+    done = set()
+    if not Path(path).exists():
+        return done
+    try:
+        with open(path, "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                done.add(row["domain"])
+    except Exception:
+        return done
+    return done
+
+
+# re-read the full output csv for the final summary (covers resumed + new rows)
+def load_all_results(path):
+    results = []
+    try:
+        with open(path, "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                row["spf_present"] = row["spf_present"] == "True"
+                row["dns_lookup_limit_exceeded"] = row["dns_lookup_limit_exceeded"] == "True"
+                row["multiple_spf_records"] = row["multiple_spf_records"] == "True"
+                row["has_ptr_mechanism"] = row["has_ptr_mechanism"] == "True"
+                results.append(row)
+    except Exception:
+        pass
+    return results
+
+
 # parse args, run the scan with threading, and write results to csv
 def main():
     parser = argparse.ArgumentParser(description="SPF Scanner for Tranco domains")
@@ -192,27 +229,55 @@ def main():
                         help="Also save results as JSON")
     parser.add_argument("--sample", "-s", type=int, default=None,
                         help="Stratified sample size (equal across 4 tiers)")
-    parser.add_argument("--workers", "-w", type=int, default=50,
+    parser.add_argument("--workers", "-w", type=int, default=30,
                         help="Concurrent worker threads")
     parser.add_argument("--timeout", "-t", type=float, default=5.0,
                         help="DNS query timeout in seconds")
+    parser.add_argument("--retries", "-r", type=int, default=DEFAULT_RETRIES,
+                        help="Retries per domain on transient DNS errors")
+    parser.add_argument("--delay-min", type=float, default=1.0,
+                        help="Min random delay (sec) before each query")
+    parser.add_argument("--delay-max", type=float, default=3.0,
+                        help="Max random delay (sec) before each query")
+    parser.add_argument("--resume", action="store_true",
+                        help="Resume from existing output file, skipping done domains")
     args = parser.parse_args()
 
     print(f"Loading Tranco list from {args.input} ...")
-    domains = load_tranco(args.input, args.sample)
-    print(f"  {len(domains)} domains to scan\n")
+    all_domains = load_tranco(args.input, args.sample)
+    print(f"  {len(all_domains)} total domains in input")
 
-    results = []
+    already_done = set()
+    resuming = args.resume and Path(args.output).exists()
+    if resuming:
+        already_done = load_completed(args.output)
+        print(f"  Resuming — {len(already_done)} domains already completed, skipping them")
+
+    domains = [(r, d) for r, d in all_domains if d not in already_done]
+    print(f"  {len(domains)} domains to scan this run")
+    print(f"  workers={args.workers}  retries={args.retries}  "
+          f"delay={args.delay_min}-{args.delay_max}s\n")
+
+    if not domains:
+        print("Nothing to do — all domains already scanned.")
+        print_summary(load_all_results(args.output))
+        return
+
     completed = 0
     start_time = time.time()
 
-    with open(args.output, "w", newline="") as csvfile:
+    file_mode = "a" if resuming else "w"
+    with open(args.output, file_mode, newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES, extrasaction="ignore")
-        writer.writeheader()
+        if not resuming:
+            writer.writeheader()
 
         with ThreadPoolExecutor(max_workers=args.workers) as executor:
             futures = {
-                executor.submit(scan_domain, domain, rank, args.timeout): (rank, domain)
+                executor.submit(
+                    scan_domain, domain, rank, args.timeout,
+                    args.retries, args.delay_min, args.delay_max,
+                ): (rank, domain)
                 for rank, domain in domains
             }
 
@@ -238,7 +303,6 @@ def main():
                         "error": str(e),
                     }
 
-                results.append(result)
                 writer.writerow(result)
                 csvfile.flush()
 
@@ -254,15 +318,19 @@ def main():
                     )
 
     elapsed = time.time() - start_time
-    print(f"\n\nScan complete — {len(domains)} domains in {elapsed:.1f}s")
+    total_done = completed + len(already_done)
+    print(f"\n\nScan complete — {completed} domains this run in {elapsed:.1f}s")
+    print(f"  Total in output file: {total_done}")
     print(f"Results saved to {args.output}")
+
+    all_results = load_all_results(args.output)
 
     if args.output_json:
         with open(args.output_json, "w") as f:
-            json.dump(results, f, indent=2, default=str)
+            json.dump(all_results, f, indent=2, default=str)
         print(f"JSON results saved to {args.output_json}")
 
-    print_summary(results)
+    print_summary(all_results)
 
 
 if __name__ == "__main__":
