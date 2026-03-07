@@ -20,19 +20,9 @@ async def process_batch(resolver, batch_rows):
     return await asyncio.gather(*tasks)
 
 
-async def run_analysis(
-    input_csv,
-    output_csv,
-    selectors,
-    max_concurrency,
-    batch_size,
-    limit,
-):
+async def run_analysis(input_csv, output_csv, selectors):
 
-    resolver = DkimResolver(
-        selectors=selectors,
-        max_concurrency=max_concurrency,
-    )
+    resolver = DkimResolver(selectors=selectors, max_concurrency=300)
 
     with open(output_csv, "w", newline="") as f_out:
 
@@ -61,10 +51,7 @@ async def run_analysis(
 
             batch.append((row_index, rank, domain))
 
-            if limit and row_index >= limit:
-                break
-
-            if len(batch) >= batch_size:
+            if len(batch) >= 512:
 
                 results = await process_batch(resolver, batch)
 
@@ -132,16 +119,7 @@ def parse_args():
 
     parser.add_argument("--input-csv", required=True)
     parser.add_argument("--output-csv", required=True)
-
-    parser.add_argument(
-        "--selectors",
-        default=None,
-        help="Optional comma-separated selectors",
-    )
-
-    parser.add_argument("--max-concurrency", type=int, default=300)
-    parser.add_argument("--batch-size", type=int, default=512)
-    parser.add_argument("--limit", type=int)
+    parser.add_argument("--selectors", default=None)
 
     return parser.parse_args()
 
@@ -162,16 +140,7 @@ def main():
         else None
     )
 
-    asyncio.run(
-        run_analysis(
-            args.input_csv,
-            args.output_csv,
-            selectors,
-            args.max_concurrency,
-            args.batch_size,
-            args.limit,
-        )
-    )
+    asyncio.run(run_analysis(args.input_csv, args.output_csv, selectors))
 
 
 if __name__ == "__main__":
