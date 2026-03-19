@@ -1,0 +1,413 @@
+Loading merged_results.csv …
+Loaded 1,000,000 rows.
+
+
+======================================================================
+  1. OVERALL SPF ADOPTION
+======================================================================
+  Total domains scanned:        1,000,000
+
+  SPF record found:               621,339  (62.13%)
+  No SPF (clean lookup):           82,565  (8.26%)
+  DNS / lookup errors:            311,652  (31.17%)
+
+  Resolvable domains:             688,348
+  SPF adoption (resolvable):      621,339  (90.27%)
+
+======================================================================
+  2. SPF ADOPTION BY RANKING TIER
+======================================================================
+
+  Tier                         Present      Total     Adopt%   Resolvable%
+  ------------------------- ---------- ---------- ----------  ------------
+  Tier 1 (1-1K)                    777      1,000     77.70%        92.28%
+  Tier 2 (1K-10K)                6,725      9,000     74.72%        89.68%
+  Tier 3 (10K-100K)             56,531     90,000     62.81%        90.09%
+  Tier 4 (100K-1M)             557,306    900,000     61.92%        90.29%
+
+======================================================================
+  3a. POLICY STRICTNESS – OVERALL (all domains)
+======================================================================
+  strict (-all)                     237,769  (23.78%)
+  softfail (~all)                   344,076  (34.41%)
+  neutral (?all)                     18,265  (1.83%)
+  permissive (+all)                     553  (0.06%)
+  no_all_mechanism                   20,676  (2.07%)
+  missing                           378,661  (37.87%)
+
+======================================================================
+  3b. POLICY STRICTNESS – AMONG SPF-PRESENT DOMAINS ONLY
+======================================================================
+  strict (-all)                     237,769  (38.27%)
+  softfail (~all)                   344,076  (55.38%)
+  neutral (?all)                     18,265  (2.94%)
+  permissive (+all)                     553  (0.09%)
+  no_all_mechanism                   20,676  (3.33%)
+
+======================================================================
+  3c. POLICY STRICTNESS BY RANKING TIER (SPF-present)
+======================================================================
+
+  Tier 1 (1-1K)  (SPF-present n=777)
+    strict (-all)                     437  (56.24%)
+    softfail (~all)                   287  (36.94%)
+    neutral (?all)                     21  (2.70%)
+    no_all_mechanism                   32  (4.12%)
+
+  Tier 2 (1K-10K)  (SPF-present n=6,725)
+    strict (-all)                   3,300  (49.07%)
+    softfail (~all)                 3,054  (45.41%)
+    neutral (?all)                    149  (2.22%)
+    permissive (+all)                   3  (0.04%)
+    no_all_mechanism                  219  (3.26%)
+
+  Tier 3 (10K-100K)  (SPF-present n=56,531)
+    strict (-all)                  24,550  (43.43%)
+    softfail (~all)                28,787  (50.92%)
+    neutral (?all)                  1,395  (2.47%)
+    permissive (+all)                  32  (0.06%)
+    no_all_mechanism                1,767  (3.13%)
+
+  Tier 4 (100K-1M)  (SPF-present n=557,306)
+    strict (-all)                 209,482  (37.59%)
+    softfail (~all)               311,948  (55.97%)
+    neutral (?all)                 16,700  (3.00%)
+    permissive (+all)                 518  (0.09%)
+    no_all_mechanism               18,658  (3.35%)
+
+======================================================================
+  3d. STRICT (-all) vs SOFTFAIL (~all) RATIO BY TIER
+======================================================================
+
+  Tier                          Strict   Softfail      Ratio
+  ------------------------- ---------- ---------- ----------
+  Tier 1 (1-1K)                    437        287       1.52
+  Tier 2 (1K-10K)                3,300      3,054       1.08
+  Tier 3 (10K-100K)             24,550     28,787       0.85
+  Tier 4 (100K-1M)             209,482    311,948       0.67
+
+======================================================================
+  4a. DNS LOOKUP COUNT DISTRIBUTION (SPF-present)
+======================================================================
+  count      621,339
+  mean          3.69
+  std           2.96
+  min              0
+  25%              1
+  50%              3
+  75%              5
+  max            226
+
+======================================================================
+  4b. DNS LOOKUP COUNT HISTOGRAM (SPF-present)
+======================================================================
+     0 lookups         39,076  (  6.29%)  ############
+     1 lookups        119,009  ( 19.15%)  ######################################
+     2 lookups        118,015  ( 18.99%)  #####################################
+     3 lookups         89,099  ( 14.34%)  ############################
+     4 lookups         60,558  (  9.75%)  ###################
+     5 lookups         50,776  (  8.17%)  ################
+     6 lookups         37,270  (  6.00%)  ###########
+     7 lookups         32,107  (  5.17%)  ##########
+     8 lookups         26,160  (  4.21%)  ########
+     9 lookups         19,992  (  3.22%)  ######
+    10-14 lookups      26,785  (  4.31%)  ########
+    15-19 lookups       2,209  (  0.36%)  #
+    20-99 lookups         280  (  0.05%)  #
+
+======================================================================
+  4c. EXCEEDED 10-LOOKUP LIMIT BY TIER
+======================================================================
+  Tier 1 (1-1K)                   17 / 777       (2.19%)
+  Tier 2 (1K-10K)                140 / 6,725     (2.08%)
+  Tier 3 (10K-100K)            1,467 / 56,531    (2.60%)
+  Tier 4 (100K-1M)            13,655 / 557,306   (2.45%)
+
+======================================================================
+  4d. AVERAGE DNS LOOKUP COUNT BY TIER (SPF-present)
+======================================================================
+  Tier 1 (1-1K)             mean=3.91  median=3  max=17
+  Tier 2 (1K-10K)           mean=3.82  median=3  max=26
+  Tier 3 (10K-100K)         mean=3.95  median=3  max=35
+  Tier 4 (100K-1M)          mean=3.66  median=3  max=226
+
+======================================================================
+  5a. SPF MISCONFIGURATIONS – OVERALL (SPF-present)
+======================================================================
+  SPF-present domains:            621,339
+
+  Multiple SPF records:            11,781  (1.90%)
+  Exceeded 10-lookup limit:        15,279  (2.46%)
+  Deprecated ptr mechanism:        12,212  (1.97%)
+  Permissive +all policy:             553  (0.09%)
+  Missing all mechanism:           20,676  (3.33%)
+
+  Any misconfiguration*:           38,203  (6.15%)
+  (* multiple | exceeded | ptr | +all)
+
+======================================================================
+  5b. MULTIPLE SPF RECORD COUNT DISTRIBUTION
+======================================================================
+  2 SPF records:    10,451 domains
+  3 SPF records:     1,045 domains
+  4 SPF records:       211 domains
+  5 SPF records:        43 domains
+  6 SPF records:        20 domains
+  7 SPF records:         5 domains
+  8 SPF records:         3 domains
+  9 SPF records:         1 domains
+  11 SPF records:         1 domains
+  14 SPF records:         1 domains
+
+======================================================================
+  5c. MISCONFIGURATIONS BY RANKING TIER (SPF-present)
+======================================================================
+
+  Tier 1 (1-1K)  (SPF-present n=777)
+    Multiple SPF records:             2  (0.26%)
+    Exceeded 10 lookups:             17  (2.19%)
+    Deprecated ptr:                   6  (0.77%)
+    Permissive +all:                  0  (0.00%)
+
+  Tier 2 (1K-10K)  (SPF-present n=6,725)
+    Multiple SPF records:            70  (1.04%)
+    Exceeded 10 lookups:            140  (2.08%)
+    Deprecated ptr:                  68  (1.01%)
+    Permissive +all:                  3  (0.04%)
+
+  Tier 3 (10K-100K)  (SPF-present n=56,531)
+    Multiple SPF records:           818  (1.45%)
+    Exceeded 10 lookups:          1,467  (2.60%)
+    Deprecated ptr:                 722  (1.28%)
+    Permissive +all:                 32  (0.06%)
+
+  Tier 4 (100K-1M)  (SPF-present n=557,306)
+    Multiple SPF records:        10,891  (1.95%)
+    Exceeded 10 lookups:         13,655  (2.45%)
+    Deprecated ptr:              11,416  (2.05%)
+    Permissive +all:                518  (0.09%)
+
+======================================================================
+  6a. SPF MECHANISM USAGE – OVERALL (SPF-present)
+======================================================================
+  (how many SPF-present domains use each mechanism at least once)
+
+  all                     585,392  (94.21%)
+  include                 466,738  (75.12%)
+  ip4                     245,779  (39.56%)
+  a                       184,946  (29.77%)
+  mx                       85,839  (13.82%)
+  ip6                      16,741  (2.69%)
+  redirect                 16,228  (2.61%)
+  ptr                       5,639  (0.91%)
+  exists                    3,200  (0.52%)
+
+======================================================================
+  6b. MECHANISM USAGE BY RANKING TIER
+======================================================================
+
+  Tier 1 (1-1K)  (SPF-present n=777)
+    all                     719  (92.54%)
+    include                 564  (72.59%)
+    ip4                     244  (31.40%)
+    mx                       82  (10.55%)
+    a                        65  (8.37%)
+    ip6                      32  (4.12%)
+    redirect                 30  (3.86%)
+    exists                   13  (1.67%)
+    ptr                       2  (0.26%)
+
+  Tier 2 (1K-10K)  (SPF-present n=6,725)
+    all                   6,386  (94.96%)
+    include               5,121  (76.15%)
+    ip4                   2,417  (35.94%)
+    a                     1,020  (15.17%)
+    mx                      850  (12.64%)
+    redirect                187  (2.78%)
+    ip6                     177  (2.63%)
+    exists                  108  (1.61%)
+    ptr                      34  (0.51%)
+
+  Tier 3 (10K-100K)  (SPF-present n=56,531)
+    all                  53,300  (94.28%)
+    include              45,011  (79.62%)
+    ip4                  22,684  (40.13%)
+    a                    11,885  (21.02%)
+    mx                    8,360  (14.79%)
+    ip6                   1,668  (2.95%)
+    redirect              1,429  (2.53%)
+    exists                  567  (1.00%)
+    ptr                     371  (0.66%)
+
+  Tier 4 (100K-1M)  (SPF-present n=557,306)
+    all                 524,987  (94.20%)
+    include             416,042  (74.65%)
+    ip4                 220,434  (39.55%)
+    a                   171,976  (30.86%)
+    mx                   76,547  (13.74%)
+    ip6                  14,864  (2.67%)
+    redirect             14,582  (2.62%)
+    ptr                   5,232  (0.94%)
+    exists                2,512  (0.45%)
+
+======================================================================
+  7a. INCLUDE CHAIN DEPTH (SPF-present with includes)
+======================================================================
+  SPF-present domains with includes/redirects: 491,448  (79.09% of SPF-present)
+
+  Include/redirect chain length distribution:
+    depth 1     155,761  (31.69%)
+    depth 2      79,579  (16.19%)
+    depth 3      68,178  (13.87%)
+    depth 4      50,174  (10.21%)
+    depth 5      43,834  (8.92%)
+    depth 6      28,913  (5.88%)
+    depth 7      22,560  (4.59%)
+    depth 8      17,467  (3.55%)
+    depth 9      10,538  (2.14%)
+    depth 10      6,882  (1.40%)
+    depth 11      3,268  (0.66%)
+    depth 12      2,116  (0.43%)
+    depth 13        955  (0.19%)
+    depth 14        540  (0.11%)
+    depth 15        318  (0.06%)
+    depth 16        146  (0.03%)
+    depth 17         92  (0.02%)
+    depth 18         46  (0.01%)
+    depth 19         31  (0.01%)
+    depth 20         15  (0.00%)
+
+======================================================================
+  7b. MOST COMMONLY INCLUDED THIRD-PARTY DOMAINS (top 30)
+======================================================================
+  Domain                                             Count    % of SPF
+  --------------------------------------------- ----------  ----------
+  spf.protection.outlook.com                       157,894  (25.41%)
+  _spf.google.com                                  128,598  (20.70%)
+  amazonses.com                                     46,103  (7.42%)
+  sendgrid.net                                      38,496  (6.20%)
+  ab.sendgrid.net                                   36,578  (5.89%)
+  mail.zendesk.com                                  26,263  (4.23%)
+  _spf.eu.mailgun.org                               25,795  (4.15%)
+  servers.mcsv.net                                  24,810  (3.99%)
+  _spf1.mailgun.org                                 24,494  (3.94%)
+  _spf2.mailgun.org                                 24,493  (3.94%)
+  _spf.mailgun.org                                  24,401  (3.93%)
+  mailgun.org                                       24,359  (3.92%)
+  spf.mandrillapp.com                               23,211  (3.74%)
+  relay.mailchannels.net                            21,508  (3.46%)
+  _spf.salesforce.com                               19,051  (3.07%)
+  spf.mailjet.com                                   14,959  (2.41%)
+  _spf-ipv6.yandex.ru                               10,904  (1.75%)
+  _spf-ipv4-yc.yandex.ru                            10,883  (1.75%)
+  _spf.yandex.ru                                    10,863  (1.75%)
+  _spf.mx.cloudflare.net                            10,254  (1.65%)
+  _spf.yandex.net                                    9,762  (1.57%)
+  zcsend.net                                         8,750  (1.41%)
+  secureserver.net                                   8,522  (1.37%)
+  spf-0.secureserver.net                             8,492  (1.37%)
+  spf.efwd.registrar-servers.com                     7,990  (1.29%)
+  _spf.mail.hostinger.com                            7,268  (1.17%)
+  relay.mail.hostinger.com                           7,258  (1.17%)
+  spf.zoho.com                                       7,172  (1.15%)
+  spf.zohomail.com                                   7,080  (1.14%)
+  spf.sendinblue.com                                 6,971  (1.12%)
+
+======================================================================
+  8a. DNS ERROR BREAKDOWN – OVERALL
+======================================================================
+  Domains with errors: 311,652  (31.17%)
+
+  NoAnswer                          243,951  (78.28%)
+  NoNameservers                      31,170  (10.00%)
+  NXDOMAIN                           12,561  (4.03%)
+  Include-chain NXDOMAIN             10,392  (3.33%)
+  Timeout                             9,139  (2.93%)
+  Include-chain NoAnswer              4,417  (1.42%)
+  Other                                  22  (0.01%)
+
+======================================================================
+  8b. DNS ERRORS BY RANKING TIER
+======================================================================
+  Tier 1 (1-1K)                  158 / 1,000     (15.80%)
+  Tier 2 (1K-10K)              1,501 / 9,000     (16.68%)
+  Tier 3 (10K-100K)           27,251 / 90,000    (30.28%)
+  Tier 4 (100K-1M)           282,742 / 900,000   (31.42%)
+
+======================================================================
+  9a. SPF + DMARC CO-ADOPTION
+======================================================================
+  SPF + DMARC both valid:         410,238  (41.02%)
+  SPF only (no valid DMARC):      211,101  (21.11%)
+  DMARC only (no SPF):             31,704  (3.17%)
+  Neither:                        346,957  (34.70%)
+
+======================================================================
+  9b. SPF + DMARC CO-ADOPTION BY TIER
+======================================================================
+
+  Tier                            Both   SPF only DMARC only    Neither
+  ------------------------- ---------- ---------- ---------- ----------
+  Tier 1 (1-1K)                 69.90%      7.80%      2.90%     19.40%
+  Tier 2 (1K-10K)               61.76%     12.97%      2.30%     22.98%
+  Tier 3 (10K-100K)             47.96%     14.85%      7.23%     29.96%
+  Tier 4 (100K-1M)              40.09%     21.83%      2.77%     35.30%
+
+======================================================================
+  9c. DMARC aspf ALIGNMENT MODE (among domains with both SPF + DMARC)
+======================================================================
+  (n=415,521 domains with both SPF and DMARC)
+
+  r                                      379,679  (91.37%)
+  s                                       30,483  (7.34%)
+  (not set / default relaxed)              5,283  (1.27%)
+  s.                                          55  (0.01%)
+  r.                                           6  (0.00%)
+  strict                                       5  (0.00%)
+  none                                         2  (0.00%)
+  relaxed                                      2  (0.00%)
+  p                                            2  (0.00%)
+  s 2                                          2  (0.00%)
+
+======================================================================
+  9d. DMARC POLICY vs SPF STRICTNESS (among domains with both)
+======================================================================
+dmarc_policy       (none)   none  quarantine  reject
+policy_strictness                                   
+neutral (?all)       0.03   1.67        0.31    0.18
+no_all_mechanism     0.04   0.90        0.44    0.78
+permissive (+all)    0.00   0.05        0.01    0.01
+softfail (~all)      0.61  32.45       12.17    8.57
+strict (-all)        0.58  15.66       11.28   14.24
+
+======================================================================
+  10. PERMISSIVE +all DOMAINS
+======================================================================
+  Total domains with +all:  553
+
+  By tier:
+    Tier 1 (1-1K)                  0
+    Tier 2 (1K-10K)                3
+    Tier 3 (10K-100K)             32
+    Tier 4 (100K-1M)             518
+
+  Sample domains (first 15):
+    rank=378,770  100realty.ua
+    rank=900,689  10casinos.com
+    rank=614,288  1p.sg
+    rank= 68,420  2001online.com
+    rank=176,484  22xploitercrew.com
+    rank=243,477  3ptechies.com
+    rank=324,408  3xc.ru
+    rank=153,076  67-72chevytrucks.com
+    rank=842,703  7akses.net.id
+    rank=357,677  a-zdarts.com
+    rank=372,880  aboutmanchester.co.uk
+    rank=158,021  adglare.eu
+    rank=916,357  adm-km.gov.ua
+    rank=687,273  adogawe.com
+    rank=575,831  adtelecomrn.net.br
+
+======================================================================
+  SPF ANALYSIS COMPLETE
+======================================================================
