@@ -13,8 +13,8 @@ def analyze_email(email_folder, filename):
     h = parser.parsestr(email)
     
     email_result = {
-        "domain": h["From"],
-        "filename": filename
+        "domain": h["From"].split("@")[1].split(">")[0],
+        # "filename": filename
     }
     authentication_results = h["Authentication-Results"]
 
@@ -32,8 +32,11 @@ def analyze_email(email_folder, filename):
     if ("dmarc=" in authentication_results):
         dmarc_split = authentication_results.split("dmarc=")[1]
         email_result["dmarc_result"] = dmarc_split.split(" ")[0]
-        policy = dmarc_split.split("p=")[1].split(" ")[0]
-        email_result["dmarc_policy"] = policy
+        try:
+            policy = dmarc_split.split("p=")[1].split(" ")[0]
+            email_result["dmarc_policy"] = policy
+        except:
+            email_result["dmarc_policy"] = None
     else:
         email_result["dmarc_result"] = "none"
     return email_result
@@ -51,7 +54,7 @@ def scan_folder(email_folder):
 def save_results(results, output_csv):
     header =  {
             "domain": "domain",
-            "filename": "filename",
+            # "filename": "filename",
             "spf_result": "spf_result",
             "dmarc_result" :"dmarc_result",
             "dkim_result": "dkim_result",
@@ -61,12 +64,12 @@ def save_results(results, output_csv):
     results.insert(0, header)
 
     with open(output_csv, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=["domain", "filename", "spf_result", "dkim_result", "dmarc_result", "dmarc_policy"])
+        writer = csv.DictWriter(file, fieldnames=["domain", "spf_result", "dkim_result", "dmarc_result", "dmarc_policy"])
         writer.writerows(results)
         
 
 if __name__ == "__main__":
-    folder = "eml_emails/"
+    folder = "../eml_emails/"
     output_csv = "email_auth_results.csv"
 
     results = scan_folder(folder)
