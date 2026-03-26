@@ -4,7 +4,7 @@ import csv
 import logging
 from typing import List, Optional
 
-from dkim_analysis import (
+from tranco_analysis.dkim.dkim_analysis import (
     DkimResolver,
     iter_tranco_csv,
 )
