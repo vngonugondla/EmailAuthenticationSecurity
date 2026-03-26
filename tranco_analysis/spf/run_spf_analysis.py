@@ -445,7 +445,7 @@ def permissive_deep_dive(df):
 # ─────────────────────────────────────────────────────────────────────
 def main():
     print("Loading merged_results.csv …")
-    df = load_data("merged_results.csv")
+    df = load_data("../merged_results.csv")
     print(f"Loaded {len(df):,} rows.\n")
 
     overall_adoption(df)

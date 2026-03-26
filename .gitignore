@@ -24,4 +24,4 @@ tranco_*.csv
 .DS_Store
 Thumbs.db
 
-emails/
+eml_emails/

@@ -66,7 +66,7 @@ def save_results(results, output_csv):
         
 
 if __name__ == "__main__":
-    folder = "emails/"
+    folder = "eml_emails/"
     output_csv = "email_auth_results.csv"
 
     results = scan_folder(folder)
