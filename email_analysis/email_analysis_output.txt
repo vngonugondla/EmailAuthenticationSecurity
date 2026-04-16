@@ -1,0 +1,133 @@
+Loading email authentication results …
+Loaded 100 emails from 3 members.
+
+
+========================================================================
+  F1. OVERALL PASS RATES
+========================================================================
+  Total emails analyzed:      100
+
+  SPF pass:                   100  (100.00%)
+  DKIM pass:                   98  (98.00%)
+  DMARC pass:                  96  (96.00%)
+
+  All three pass:              94  (94.00%)
+  At least one failure:         6  (6.00%)
+
+========================================================================
+  F2. PASS RATES BY EMAIL CATEGORY
+========================================================================
+
+  Category                 n        SPF       DKIM      DMARC      All 3
+  -------------------- ----- ---------- ---------- ---------- ----------
+  Promotions              38    100.00%    100.00%     94.74%     94.74%
+  Social                  14    100.00%    100.00%    100.00%    100.00%
+  Updates                 48    100.00%     95.83%     95.83%     91.67%
+
+========================================================================
+  F3a. DMARC POLICY BREAKDOWN – OVERALL
+========================================================================
+  REJECT                   59  (59.00%)
+  QUARANTINE               19  (19.00%)
+  NONE                     18  (18.00%)
+  (empty/none)              4  (4.00%)
+
+========================================================================
+  F3b. DMARC POLICY BY CATEGORY
+========================================================================
+
+  Category                    REJECT    QUARANTINE          NONE       (empty)
+  --------------------  ------------  ------------  ------------  ------------
+  Promotions                  50.00%        21.05%        26.32%         2.63%
+  Social                      64.29%        14.29%        14.29%         7.14%
+  Updates                     64.58%        18.75%        12.50%         4.17%
+
+========================================================================
+  F4. EMAILS WITH AT LEAST ONE FAILURE
+========================================================================
+  Total emails with failures: 6
+
+  Domain                                   Cat          SPF      DKIM     DMARC    Policy       Member    
+  ---------------------------------------- ------------ -------- -------- -------- ------------ ----------
+  certifyglobal.com                        Updates      pass     FAIL     pass     QUARANTINE   shreyashi 
+  certifyglobal.com                        Updates      pass     FAIL     pass     QUARANTINE   shreyashi 
+  postmates.com                            Promotions   pass     pass     FAIL     NONE         veena     
+  kodewithklossy.org                       Updates      pass     pass     FAIL                  veena     
+  tindrumasiankitchen.com                  Promotions   pass     pass     FAIL                  veena     
+  emailrelay.com                           Updates      pass     pass     FAIL                  veena     
+
+========================================================================
+  F4b. FAILURE TYPE COUNTS
+========================================================================
+  SPF failures:       0
+  DKIM failures:      2
+  DMARC failures:     4
+
+========================================================================
+  F5. PER-MEMBER COMPARISON
+========================================================================
+
+  Member              n        SPF       DKIM      DMARC      All 3
+  --------------- ----- ---------- ---------- ---------- ----------
+  elizabeth          33    100.00%    100.00%    100.00%    100.00%
+  shreyashi          34    100.00%     94.12%    100.00%     94.12%
+  veena              33    100.00%    100.00%     87.88%     87.88%
+
+========================================================================
+  F5b. DMARC POLICY BY MEMBER
+========================================================================
+
+  Member              REJECT   QUARANTINE       NONE    (empty)
+  --------------- ---------- ------------ ---------- ----------
+  elizabeth           60.61%       15.15%     21.21%      3.03%
+  shreyashi           58.82%       26.47%     14.71%      0.00%
+  veena               57.58%       15.15%     18.18%      9.09%
+
+========================================================================
+  F5c. CATEGORY DISTRIBUTION BY MEMBER
+========================================================================
+
+  elizabeth  (n=33)
+    Promotions             15  (45.45%)
+    Updates                11  (33.33%)
+    Social                  7  (21.21%)
+
+  shreyashi  (n=34)
+    Promotions             16  (47.06%)
+    Updates                14  (41.18%)
+    Social                  4  (11.76%)
+
+  veena  (n=33)
+    Updates                23  (69.70%)
+    Promotions              7  (21.21%)
+    Social                  3  (9.09%)
+
+========================================================================
+  F6. DOMAIN OVERLAP ACROSS MEMBERS
+========================================================================
+
+  Unique domains per member:
+    elizabeth         31 unique domains
+    shreyashi         32 unique domains
+    veena             31 unique domains
+
+  Total unique domains across all members: 87
+  Domains shared by ALL members:           1
+    - emailrelay.com
+
+  Pair-wise overlap:
+    elizabeth ∩ shreyashi: 3 domains
+      - emailrelay.com
+      - google.com
+      - linkedin.com
+    elizabeth ∩ veena: 2 domains
+      - emailrelay.com
+      - uber.com
+    shreyashi ∩ veena: 3 domains
+      - emailrelay.com
+      - github.com
+      - substack.com
+
+========================================================================
+  EMAIL ANALYSIS COMPLETE
+========================================================================

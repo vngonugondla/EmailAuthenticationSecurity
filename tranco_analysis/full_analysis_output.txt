@@ -1,0 +1,449 @@
+Loading merged_results.csv …
+Loaded 1,000,000 rows.
+
+
+========================================================================
+  A1. CONDITIONAL PROBABILITIES – OVERALL
+========================================================================
+
+  P( A | B )                                       Count  / Given       Prob
+  --------------------------------------------- -------- -------- ----------
+  P( DMARC valid | SPF present )                 410,238  621,339     66.02%
+  P( DMARC valid | DKIM present )                 32,360   36,287     89.18%
+  P( DMARC valid | SPF & DKIM )                   32,029   35,668     89.80%
+  P( DKIM present | SPF present )                 35,668  621,339      5.74%
+  P( SPF present | DMARC valid )                 410,238  441,942     92.83%
+  P( SPF present | DKIM present )                 35,668   36,287     98.29%
+  P( DKIM present | DMARC valid )                 32,360  441,942      7.32%
+
+========================================================================
+  A2. CONDITIONAL PROBABILITIES – BY TIER
+========================================================================
+
+  P(DMARC|SPF):
+    Tier 1 (1-1K)                  699 / 777       (89.96%)
+    Tier 2 (1K-10K)              5,558 / 6,725     (82.65%)
+    Tier 3 (10K-100K)           43,166 / 56,531    (76.36%)
+    Tier 4 (100K-1M)           360,815 / 557,306   (64.74%)
+
+  P(DMARC|DKIM):
+    Tier 1 (1-1K)                  432 / 443       (97.52%)
+    Tier 2 (1K-10K)              3,671 / 3,957     (92.77%)
+    Tier 3 (10K-100K)           28,177 / 31,764    (88.71%)
+    Tier 4 (100K-1M)                80 / 123       (65.04%)
+
+  P(DKIM|SPF):
+    Tier 1 (1-1K)                  443 / 777       (57.01%)
+    Tier 2 (1K-10K)              3,910 / 6,725     (58.14%)
+    Tier 3 (10K-100K)           31,197 / 56,531    (55.19%)
+    Tier 4 (100K-1M)               118 / 557,306   (0.02%)
+
+  P(SPF|DMARC):
+    Tier 1 (1-1K)                  699 / 728       (96.02%)
+    Tier 2 (1K-10K)              5,558 / 5,765     (96.41%)
+    Tier 3 (10K-100K)           43,166 / 49,670    (86.91%)
+    Tier 4 (100K-1M)           360,815 / 385,779   (93.53%)
+
+========================================================================
+  B1. PROTOCOL COMBINATION BREAKDOWN – OVERALL
+========================================================================
+
+  Combination                         Count           %
+  ------------------------------ ----------  ----------
+  SPF + DMARC                       378,209  (37.82%)
+  NONE                              346,669  (34.67%)
+  SPF                               207,462  (20.75%)
+  SPF + DKIM + DMARC                 32,029  (3.20%)
+  DMARC                              31,373  (3.14%)
+  SPF + DKIM                          3,639  (0.36%)
+  DKIM + DMARC                          331  (0.03%)
+  DKIM                                  288  (0.03%)
+
+========================================================================
+  B2. PROTOCOL COMBINATION BREAKDOWN – BY TIER
+========================================================================
+
+  Tier 1 (1-1K)  (n=1,000)
+    SPF + DKIM + DMARC                432  (43.20%)
+    SPF + DMARC                       267  (26.70%)
+    NONE                              194  (19.40%)
+    SPF                                67  (6.70%)
+    DMARC                              29  (2.90%)
+    SPF + DKIM                         11  (1.10%)
+
+  Tier 2 (1K-10K)  (n=9,000)
+    SPF + DKIM + DMARC              3,641  (40.46%)
+    NONE                            2,051  (22.79%)
+    SPF + DMARC                     1,917  (21.30%)
+    SPF                               898  (9.98%)
+    SPF + DKIM                        269  (2.99%)
+    DMARC                             177  (1.97%)
+    DKIM + DMARC                       30  (0.33%)
+    DKIM                               17  (0.19%)
+
+  Tier 3 (10K-100K)  (n=90,000)
+    SPF + DKIM + DMARC             27,879  (30.98%)
+    NONE                           26,696  (29.66%)
+    SPF + DMARC                    15,287  (16.99%)
+    SPF                            10,047  (11.16%)
+    DMARC                           6,206  (6.90%)
+    SPF + DKIM                      3,318  (3.69%)
+    DKIM + DMARC                      298  (0.33%)
+    DKIM                              269  (0.30%)
+
+  Tier 4 (100K-1M)  (n=900,000)
+    SPF + DMARC                   360,738  (40.08%)
+    NONE                          317,728  (35.30%)
+    SPF                           196,450  (21.83%)
+    DMARC                          24,961  (2.77%)
+    SPF + DKIM + DMARC                 77  (0.01%)
+    SPF + DKIM                         41  (0.00%)
+    DKIM + DMARC                        3  (0.00%)
+    DKIM                                2  (0.00%)
+
+========================================================================
+  B3. PAIR-WISE CO-ADOPTION MATRIX – OVERALL
+========================================================================
+
+                            SPF          DKIM         DMARC
+              SPF       621,339        35,668       410,238
+             DKIM        35,668        36,287        32,360
+            DMARC       410,238        32,360       441,942
+
+  (as % of total 1,000,000 domains)
+                            SPF          DKIM         DMARC
+              SPF        62.13%         3.57%        41.02%
+             DKIM         3.57%         3.63%         3.24%
+            DMARC        41.02%         3.24%        44.19%
+
+========================================================================
+  C1. DOMAINS WITH DMARC BUT NO SPF
+========================================================================
+  Count: 31,704
+
+  Domain                                  Rank Tier                     DKIM DMARC Policy   Error               
+  ----------------------------------- -------- ---------------------- ------ -------------- --------------------
+  001scrm.net                           269359 Tier 4 (100K-1M)        False quarantine                         
+  004gmbh.de                            933740 Tier 4 (100K-1M)        False none           no nameservers      
+  009.am                                 51220 Tier 3 (10K-100K)        True none                               
+  00bg.top                              942985 Tier 4 (100K-1M)        False reject         NoAnswer            
+  00px.net                               38804 Tier 3 (10K-100K)       False none           NoAnswer            
+  0221.com.ar                            75684 Tier 3 (10K-100K)       False none                               
+  032c.com                              330695 Tier 4 (100K-1M)        False none                               
+  042.ne.jp                             993887 Tier 4 (100K-1M)        False none           no nameservers      
+  043web.nl                             503305 Tier 4 (100K-1M)        False none           LifetimeTimeout     
+  05.ru                                 100240 Tier 4 (100K-1M)        False none           no nameservers      
+
+========================================================================
+  C2. DOMAINS WITH SPF BUT NO DMARC
+========================================================================
+  Count: 211,101
+
+  Domain                                  Rank Tier                     DKIM SPF Policy        
+  ----------------------------------- -------- ---------------------- ------ ------------------
+  00.net                                248046 Tier 4 (100K-1M)        False strict (-all)     
+  000.co                                917644 Tier 4 (100K-1M)        False strict (-all)     
+  000025.net                            413870 Tier 4 (100K-1M)        False softfail (~all)   
+  000606.xyz                            298357 Tier 4 (100K-1M)        False strict (-all)     
+  001.africa                            641852 Tier 4 (100K-1M)        False softfail (~all)   
+  001.domains                           341488 Tier 4 (100K-1M)        False softfail (~all)   
+  0038.net                              883263 Tier 4 (100K-1M)        False softfail (~all)   
+  004999.xyz                            364789 Tier 4 (100K-1M)        False softfail (~all)   
+  005net.com                            614242 Tier 4 (100K-1M)        False softfail (~all)   
+  007.domains                           423550 Tier 4 (100K-1M)        False softfail (~all)   
+
+========================================================================
+  C3. DOMAINS WITH SPF + DMARC BUT NO DKIM
+========================================================================
+  Count: 378,209
+
+  Domain                                  Rank Tier                   SPF Policy         DMARC Policy  
+  ----------------------------------- -------- ---------------------- ------------------ --------------
+  0-105.com                             960784 Tier 4 (100K-1M)       softfail (~all)    none          
+  0-24.jp                               156161 Tier 4 (100K-1M)       softfail (~all)    none          
+  0-zaym.ru                             671093 Tier 4 (100K-1M)       neutral (?all)     quarantine    
+  00-00.eu                              124838 Tier 4 (100K-1M)       softfail (~all)    none          
+  0001.casino                           709396 Tier 4 (100K-1M)       strict (-all)      quarantine    
+  0002.casino                           900167 Tier 4 (100K-1M)       strict (-all)      quarantine    
+  0004442tz1.info                       411816 Tier 4 (100K-1M)       softfail (~all)    none          
+  0005553tz1.info                       543393 Tier 4 (100K-1M)       softfail (~all)    none          
+  0005554tz1.info                       518657 Tier 4 (100K-1M)       softfail (~all)    none          
+  001.com.ua                            592746 Tier 4 (100K-1M)       softfail (~all)    none          
+
+========================================================================
+  C4. DOMAINS WITH DKIM BUT NO SPF
+========================================================================
+  Count: 619
+
+  Domain                                  Rank Tier                    DMARC Selector         Error               
+  ----------------------------------- -------- ---------------------- ------ ---------------- --------------------
+  009.am                                 51220 Tier 3 (10K-100K)        True mail                                 
+  123apps.com                            66136 Tier 3 (10K-100K)        True google                               
+  1x.partners                            77230 Tier 3 (10K-100K)        True google                               
+  1xbet.co.ke                            61267 Tier 3 (10K-100K)        True google                               
+  1xbetkzh.com                           83905 Tier 3 (10K-100K)       False dkim             NoAnswer            
+  220vk.ru                               71584 Tier 3 (10K-100K)       False mail                                 
+  24dayviagrix.com                       63442 Tier 3 (10K-100K)       False default          NoAnswer            
+  24sports.com.cy                        76190 Tier 3 (10K-100K)       False default                              
+  24videos.space                          9097 Tier 2 (1K-10K)         False default          NoAnswer            
+  2kcoretech.online                       5795 Tier 2 (1K-10K)          True mandrill                             
+
+========================================================================
+  C5. DOMAINS WITH DKIM BUT NO DMARC
+========================================================================
+  Count: 3,927
+
+  Domain                                  Rank Tier                      SPF Selector         Key Algo  
+  ----------------------------------- -------- ---------------------- ------ ---------------- ----------
+  009.xn--p1ai                           57319 Tier 3 (10K-100K)        True mail             RSA       
+  100points.ru                           64232 Tier 3 (10K-100K)        True mail             RSA       
+  10best.com                             38800 Tier 3 (10K-100K)        True selector1        RSA       
+  10dakot.co.il                          88076 Tier 3 (10K-100K)        True default          RSA       
+  10footwave.com                         75446 Tier 3 (10K-100K)        True google           RSA       
+  10minuteschool.com                     61507 Tier 3 (10K-100K)        True google           RSA       
+  110km.ru                               39760 Tier 3 (10K-100K)        True mail             RSA       
+  123doujin.com                          85066 Tier 3 (10K-100K)        True default          RSA       
+  139.com                                31492 Tier 3 (10K-100K)        True dkim             RSA       
+  1c-connect.com                         41312 Tier 3 (10K-100K)        True mail             RSA       
+
+========================================================================
+  C6. DOMAINS WITH NONE OF SPF, DKIM, DMARC
+========================================================================
+  Count: 346,669
+
+  Domain                                  Rank Tier                   Error                    
+  ----------------------------------- -------- ---------------------- -------------------------
+  tdesktop.com                          128869 Tier 4 (100K-1M)       NoAnswer                 
+  szmaiyakq.com                         820646 Tier 4 (100K-1M)       NoAnswer                 
+  lapa-network.com                      507078 Tier 4 (100K-1M)       NoAnswer                 
+  cjk71vanywherect4uezbean.shop         372506 Tier 4 (100K-1M)       NXDOMAIN                 
+  talkfeed.co.uk                        270575 Tier 4 (100K-1M)       NoAnswer                 
+  xmqsmjjjwx.com                        239223 Tier 4 (100K-1M)       NoAnswer                 
+  vidyatime.com                         696847 Tier 4 (100K-1M)       LifetimeTimeout          
+  jtuee.com                             925429 Tier 4 (100K-1M)       NoAnswer                 
+  southernhemboutique.com               833725 Tier 4 (100K-1M)                                
+  msharebox.com                         951351 Tier 4 (100K-1M)                                
+
+========================================================================
+  C7. SUMMARY: GAP COUNTS
+========================================================================
+  DMARC but no SPF                        31,704  (3.17%)
+  SPF but no DMARC                       211,101  (21.11%)
+  SPF+DMARC but no DKIM                  378,209  (37.82%)
+  DKIM but no SPF                            619  (0.06%)
+  DKIM but no DMARC                        3,927  (0.39%)
+  DKIM only (no SPF, no DMARC)               288  (0.03%)
+  None of the three                      346,669  (34.67%)
+
+========================================================================
+  D1. SECURITY SCORE (0-3) DISTRIBUTION
+========================================================================
+  Score 0:     346,669  (34.67%)
+  Score 1:     239,123  (23.91%)
+  Score 2:     382,179  (38.22%)
+  Score 3:      32,029  (3.20%)
+
+  Mean score: 1.100
+
+========================================================================
+  D2. AVERAGE SECURITY SCORE BY TIER
+========================================================================
+  Tier 1 (1-1K)             mean = 1.948
+  Tier 2 (1K-10K)           mean = 1.827
+  Tier 3 (10K-100K)         mean = 1.533
+  Tier 4 (100K-1M)          mean = 1.048
+
+========================================================================
+  D3. SECURITY SCORE DISTRIBUTION BY TIER
+========================================================================
+
+  Tier 1 (1-1K)  (n=1,000)
+    Score 0:       194  (19.40%)
+    Score 1:        96  (9.60%)
+    Score 2:       278  (27.80%)
+    Score 3:       432  (43.20%)
+
+  Tier 2 (1K-10K)  (n=9,000)
+    Score 0:     2,051  (22.79%)
+    Score 1:     1,092  (12.13%)
+    Score 2:     2,216  (24.62%)
+    Score 3:     3,641  (40.46%)
+
+  Tier 3 (10K-100K)  (n=90,000)
+    Score 0:    26,696  (29.66%)
+    Score 1:    16,522  (18.36%)
+    Score 2:    18,903  (21.00%)
+    Score 3:    27,879  (30.98%)
+
+  Tier 4 (100K-1M)  (n=900,000)
+    Score 0:   317,728  (35.30%)
+    Score 1:   221,413  (24.60%)
+    Score 2:   360,782  (40.09%)
+    Score 3:        77  (0.01%)
+
+========================================================================
+  D4. FULLY PROTECTED DOMAINS
+========================================================================
+  (all three present + DMARC p=reject + SPF -all)
+
+  Total fully protected: 6,633  (0.66%)
+
+  Tier 1 (1-1K)                  138 / 1,000     (13.80%)
+  Tier 2 (1K-10K)              1,014 / 9,000     (11.27%)
+  Tier 3 (10K-100K)            5,474 / 90,000    (6.08%)
+  Tier 4 (100K-1M)                 7 / 900,000   (0.00%)
+
+  Sample fully protected domains:
+    rank= 13,275  000webhost.com
+    rank= 45,047  00web.net
+    rank= 19,613  01net.com
+    rank= 63,246  1-grid.co.za
+    rank= 47,396  1-grid.com
+    rank= 21,698  1001fonts.com
+    rank= 61,797  1011now.com
+    rank= 13,704  101domain.com
+    rank= 49,762  101hotels.com
+    rank= 34,154  10be.de
+
+========================================================================
+  D5. VULNERABLE DOMAINS
+========================================================================
+  (DMARC p=none + SPF ~all — present but not enforcing)
+
+  Total vulnerable: 134,839  (13.48%)
+
+  Tier 1 (1-1K)                   49 / 1,000     (4.90%)
+  Tier 2 (1K-10K)                834 / 9,000     (9.27%)
+  Tier 3 (10K-100K)            9,937 / 90,000    (11.04%)
+  Tier 4 (100K-1M)           124,019 / 900,000   (13.78%)
+
+  Sample vulnerable domains:
+    rank=960,784  0-105.com
+    rank=156,161  0-24.jp
+    rank=124,838  00-00.eu
+    rank=411,816  0004442tz1.info
+    rank=543,393  0005553tz1.info
+    rank=518,657  0005554tz1.info
+    rank=592,746  001.com.ua
+    rank=404,172  001webhospedaje.com
+    rank=744,352  0038.co.jp
+    rank= 77,528  003ms.ru
+
+========================================================================
+  E1. DMARC POLICY DISTRIBUTION BY TIER (among DMARC-present)
+========================================================================
+
+  Tier                             reject    quarantine          none         other
+  -------------------------  ------------  ------------  ------------  ------------
+  Tier 1 (1-1K)                    58.37%        23.13%        17.55%         0.95%
+  Tier 2 (1K-10K)                  44.97%        27.10%        26.99%         0.95%
+  Tier 3 (10K-100K)                33.09%        26.96%        38.82%         1.13%
+  Tier 4 (100K-1M)                 22.26%        23.38%        53.08%         1.29%
+
+========================================================================
+  E2. SPF STRICTNESS vs DMARC POLICY (domains with both)
+========================================================================
+  (raw counts, n=415,521)
+
+dmarc_policy_clean  missing    none  quarantine  reject     All
+policy_strictness                                              
+neutral (?all)          144    6923        1280     762    9109
+no_all_mechanism        168    3741        1835    3229    8973
+permissive (+all)         6     218          58      38     320
+softfail (~all)        2545  134839       50578   35616  223578
+strict (-all)          2420   65079       46856   59186  173541
+All                    5283  210800      100607   98831  415521
+
+
+  (as % of 415,521 domains)
+
+dmarc_policy_clean  missing   none  quarantine  reject
+policy_strictness                                     
+neutral (?all)         0.03   1.67        0.31    0.18
+no_all_mechanism       0.04   0.90        0.44    0.78
+permissive (+all)      0.00   0.05        0.01    0.01
+softfail (~all)        0.61  32.45       12.17    8.57
+strict (-all)          0.58  15.66       11.28   14.24
+
+========================================================================
+  E3. CORRELATION: STRICT SPF → DMARC REJECT?
+========================================================================
+  Domains with SPF -all:                   237,769
+  Of those, also DMARC p=reject:            59,186  (24.89%)
+
+  Domains with SPF ~all:                   344,076
+  Of those, also DMARC p=reject:            35,616  (10.35%)
+
+========================================================================
+  E4. DKIM KEY LENGTH DISTRIBUTION BY TIER (DKIM-present)
+========================================================================
+
+  Tier                             1024-bit        2048-bit        4096-bit   other/unknown
+  -------------------------  --------------  --------------  --------------  --------------
+  Tier 1 (1-1K)                      58.01%          37.70%           0.23%           4.06%
+  Tier 2 (1K-10K)                    50.90%          42.13%           0.05%           6.92%
+  Tier 3 (10K-100K)                  47.02%          50.27%           0.10%           2.61%
+  Tier 4 (100K-1M)                   32.52%          59.35%           0.00%           8.13%
+
+========================================================================
+  E5. DKIM 2048-BIT KEY ADOPTION BY TIER
+========================================================================
+  Tier 1 (1-1K)             2048=  167  1024=  257  ratio=0.65
+  Tier 2 (1K-10K)           2048=1,667  1024=2,014  ratio=0.83
+  Tier 3 (10K-100K)         2048=15,968  1024=14,936  ratio=1.07
+  Tier 4 (100K-1M)          2048=   73  1024=   40  ratio=1.82
+
+========================================================================
+  E6. DKIM SELECTOR POPULARITY BY TIER (top 5)
+========================================================================
+
+  Tier 1 (1-1K)  (DKIM-present n=443)
+    google                       190  (42.89%)
+    selector1                    115  (25.96%)
+    default                       59  (13.32%)
+    mail                          33  (7.45%)
+    mandrill                      17  (3.84%)
+
+  Tier 2 (1K-10K)  (DKIM-present n=3,957)
+    google                     1,467  (37.07%)
+    selector1                  1,072  (27.09%)
+    default                      762  (19.26%)
+    mail                         258  (6.52%)
+    selector2                    120  (3.03%)
+
+  Tier 3 (10K-100K)  (DKIM-present n=31,764)
+    google                    10,089  (31.76%)
+    selector1                  9,808  (30.88%)
+    default                    5,677  (17.87%)
+    mail                       2,518  (7.93%)
+    dkim                       1,128  (3.55%)
+
+  Tier 4 (100K-1M)  (DKIM-present n=123)
+    default                       57  (46.34%)
+    mail                          20  (16.26%)
+    dkim                          13  (10.57%)
+    google                        12  (9.76%)
+    selector1                     12  (9.76%)
+
+========================================================================
+  E7. DMARC ALIGNMENT MODES BY TIER (DMARC-present)
+========================================================================
+  Tier 1 (1-1K)             adkim=strict:    5.85%  aspf=strict:    5.17%  (n=735)
+  Tier 2 (1K-10K)           adkim=strict:    6.67%  aspf=strict:    6.80%  (n=5,820)
+  Tier 3 (10K-100K)         adkim=strict:    6.48%  aspf=strict:    6.89%  (n=50,237)
+  Tier 4 (100K-1M)          adkim=strict:    6.83%  aspf=strict:    7.20%  (n=390,810)
+
+========================================================================
+  E8. DMARC REPORTING ADOPTION BY TIER (DMARC-present)
+========================================================================
+
+  Tier                           Has rua      Has ruf         Both      Neither
+  ------------------------- ------------ ------------ ------------ ------------
+  Tier 1 (1-1K)                   92.38%       55.51%       55.24%        7.35%
+  Tier 2 (1K-10K)                 85.24%       50.31%       49.35%       13.80%
+  Tier 3 (10K-100K)               77.18%       43.39%       42.51%       21.94%
+  Tier 4 (100K-1M)                61.89%       31.69%       30.74%       37.16%
+
+========================================================================
+  FULL TRANCO ANALYSIS COMPLETE
+========================================================================
